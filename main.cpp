@@ -8,10 +8,7 @@ struct IntNode
 	{}
 };
 
-void changeNodeValueToTwelve(IntNode* n0)
-{
-	n0->value = 12;
-}
+
 
 void show(IntNode* n0)
 {
@@ -30,12 +27,7 @@ void pushFront(IntNode* Firstnode , IntNode* NewFirstnode)
 	
 	
 }
-void pushfront2(IntNode* Firstnode, int value)
-{
-	IntNode* newfirstnode = new IntNode;
-	newfirstnode->value = value;
-	pushFront(Firstnode, newfirstnode);
-}
+
 void pushback(IntNode* Lastnode, IntNode* NewLastnode)
 {
 	NewLastnode->pPrevious = Lastnode;
@@ -44,18 +36,7 @@ void pushback(IntNode* Lastnode, IntNode* NewLastnode)
 
 
 }
-//void pushback2(IntNode* lastnode,int value)
-//{
-//	/*IntNode* newnode=nullptr;
-//	newnode->pPrevious = nullptr;
-//	newnode->pPrevious = lastnode;
-//	lastnode->pNext = newnode;
-//	newnode->pNext = nullptr;
-//	newnode->value = value;*/
-//    IntNode* newlastnode = new IntNode;
-//	newlastnode->value = value;
-//	pushback(lastnode, newlastnode);
-//}
+
 
 struct IntList
 {
@@ -64,6 +45,21 @@ struct IntList
 
 	IntList() : pFirstNode(nullptr), pLastNode(nullptr)
 	{}
+	~IntList()
+	{
+		IntNode* currentnode = pFirstNode;
+		int i = 0;
+		std::cout << std::endl;
+		while (!isEmpty())
+		{
+			popBack();
+			++i;
+		}
+			std::cout << i<< std::endl;
+
+		
+
+	}
 	bool isEmpty()
 	{
 		return pFirstNode == nullptr;
@@ -126,55 +122,55 @@ struct IntList
 		return value;
 
 	}
+	int popFront()
+	{
+		int value = pFirstNode->value;
+		IntNode* poppedNode = pFirstNode;
+		IntNode* newfirstnode = pFirstNode->pNext;
+		if (newfirstnode == nullptr)
+			pLastNode = nullptr;
+		else
+			newfirstnode->pPrevious = nullptr;
+
+		pFirstNode = newfirstnode;
+		delete poppedNode;
+		return value;
+	}
+	bool contains(int value)
+	{
+		IntNode* currentnode = pFirstNode;
+		while (currentnode != nullptr )
+		{
+			if (currentnode->value == value)
+				return true;
+			else
+				currentnode = currentnode->pNext;
+			
+				
+		}
+		return false;
+
+	}
 };
 
 
 int main()
 {
-	//IntList p1;
-	//IntNode n1;
-	//IntNode n2;
-	////liste a 2 element 
-	//n1.pPrevious = nullptr;
-	//n1.pNext = &n2;
-	//n1.value = 1;
-
-	//n2.pPrevious = &n1;
-	//n2.pNext = nullptr;
-	//n2.value = 2;
-	//
-	//show(&n1);
-	//std::cout << std::endl;
-
-	////add element 0
-	///*IntNode n0;*/
-	///*n0.pPrevious = nullptr;
-	//n0.pNext = &n1;
-	//n1.pPrevious = &n0;*/
-	///*n0.value = 0;*/
-	///*pushFront(&n1, &n0);*/
-	///*show(&n0);
-	//std::cout << std::endl;*/
-	////add element 3
-	///*IntNode n3;*/
-	///*n3.pPrevious = &n2;
-	//n3.pNext = nullptr;
-	//n2.pNext = &n3;*/
-	///*n3.value = 3;*/
-	///*pushback(&n2, &n3);*/
-	//pushfront2(&n1, 0);
-	//p1.pushback(3);
-	//show(&n1);
-
-	//return 0;
+	
 	IntList List;
 	
 	List.pushback(3);
 	List.pushback(4);
 	List.pushFront(1);
 
-	int val = List.popBack();
-	std::cout << val << std::endl;
+	//int val = List.popBack();
+	//std::cout << val << std::endl;
+	
 	List.show();
-
+	std::cout <</* val <<*/ std::endl;
+	std::cout << List.contains(5);
+	//std::cout <</* val <<*/ std::endl;
+	//int val2 = List.popFront();
+	//std::cout << val2 << std::endl;
+	//List.show();
 }
